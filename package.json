@@ -1,0 +1,24 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "Бэкенд-часть дипломной работы в «Яндекс.Практикуме»",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/invginaku/movies-explorer-api.git"
+  },
+  "author": "Nikita Ivochkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/invginaku/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/invginaku/movies-explorer-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
