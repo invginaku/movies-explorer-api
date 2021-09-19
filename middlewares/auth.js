@@ -13,8 +13,6 @@ function auth(req, res, next) {
     req.user = payload;
     next();
   } catch (err) {
-    // TODO Создать отдельную ошибку для такого случая
-    // TODO Перевести на централизованную обработку ошибок
     next(new AuthenticationError('Неправильный токен авторизации'));
   }
 }

@@ -9,7 +9,6 @@ const { messages } = require('../config');
 
 function getMovies(req, res, next) { // Получить сохранённые фильмы
   Movie.find({})
-    // TODO Организовать централизованную обработку ошибок
     .orFail(new EmptyDatabaseError(messages.info.noMovies))
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
@@ -49,7 +48,6 @@ function addMovie(req, res, next) { // Добавить фильм
     .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        // TODO Организовать централизованную обработку ошибок
         next(new IncorrectValueError('Введены некорректные данные'));
       }
 
