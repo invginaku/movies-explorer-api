@@ -1,3 +1,5 @@
+// Передаю ревью! С опозданием из-за осенней болезни. С pull requests в следующий раз не накосячу :D
+
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
