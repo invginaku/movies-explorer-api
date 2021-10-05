@@ -1,6 +1,5 @@
 const Movie = require('../models/movie');
 
-const EmptyDatabaseError = require('../errors/EmptyDatabaseError');
 const IncorrectValueError = require('../errors/IncorrectValueError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
@@ -9,7 +8,6 @@ const { messages } = require('../config');
 
 function getMovies(req, res, next) { // Получить сохранённые фильмы
   Movie.find({})
-    .orFail(new EmptyDatabaseError(messages.info.noMovies))
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 }
