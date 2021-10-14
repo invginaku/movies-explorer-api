@@ -1,4 +1,5 @@
 const Movie = require('../models/movie');
+const mongoose = require('mongoose');
 
 const EmptyDatabaseError = require('../errors/EmptyDatabaseError');
 const IncorrectValueError = require('../errors/IncorrectValueError');
@@ -9,7 +10,7 @@ const { messages } = require('../config');
 
 function getMovies(req, res, next) { // Получить сохранённые фильмы
   Movie.find({
-    owner: req.user._id
+    owner: mongoose.Types.ObjectId(req.user._id)
   })
     .orFail(new EmptyDatabaseError(messages.info.noMovies))
     .then((movies) => res.send(movies))
