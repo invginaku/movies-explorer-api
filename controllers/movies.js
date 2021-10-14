@@ -8,7 +8,9 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const { messages } = require('../config');
 
 function getMovies(req, res, next) { // Получить сохранённые фильмы
-  Movie.find({})
+  Movie.find({
+    owner: req.user._id
+  })
     .orFail(new EmptyDatabaseError(messages.info.noMovies))
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
