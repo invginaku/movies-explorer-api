@@ -7,7 +7,9 @@ const ForbiddenError = require('../errors/ForbiddenError');
 const { messages } = require('../config');
 
 function getMovies(req, res, next) { // Получить сохранённые фильмы
-  Movie.find({})
+  Movie.find({
+    owner: req.user._id
+  })
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 }
