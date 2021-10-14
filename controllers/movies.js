@@ -1,7 +1,6 @@
 const Movie = require('../models/movie');
 const mongoose = require('mongoose');
 
-const EmptyDatabaseError = require('../errors/EmptyDatabaseError');
 const IncorrectValueError = require('../errors/IncorrectValueError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
@@ -12,7 +11,6 @@ function getMovies(req, res, next) { // Получить сохранённые 
   Movie.find({
     owner: mongoose.Types.ObjectId(req.user._id)
   })
-    .orFail(new EmptyDatabaseError(messages.info.noMovies))
     .then((movies) => res.send(movies))
     .catch((err) => next(err));
 }
@@ -59,21 +57,18 @@ function addMovie(req, res, next) { // Добавить фильм
 }
 
 function deleteMovie(req, res, next) { // Удалить фильм
-  Movie.findById(req.params._id)
+  Movie.deleteOne({
+    movieId: req.params._id,
+    owner: mongoose.Types.ObjectId(req.user._id)
+  })
     .orFail(new NotFoundError(messages.error.movieNotFound))
-    .then((movie) => {
-      if (req.user._id === String(movie.owner)) {
-        return Movie.findByIdAndDelete(req.params._id)
-          .then(() => res.send({ message: messages.info.movieDeleted }));
-      }
-
-      throw new ForbiddenError(messages.error.deletingMovieForbidden);
+    .then(() => {
+      res.send({ message: messages.info.movieDeleted })
     })
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new NotFoundError(messages.error.movieNotFound));
       }
-
       next(err);
     });
 }

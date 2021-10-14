@@ -146,7 +146,7 @@ const preValidateAddMovie = celebrate({
 
 const preValidateDeleteMovie = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().hex().length(24).required()
+    _id: Joi.number().required()
       .messages({
         'string.base': 'Поле "_id" должно быть строкой',
         'string.empty': 'Поле "_id" не должно быть пустым',
