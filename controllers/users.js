@@ -78,7 +78,8 @@ function signIn(req, res, next) { // Авторизовать пользоват
             {
               maxAge: 3600000,
               httpOnly: true,
-              sameSite: true,
+              sameSite: 'none',
+              secure: true,
             },
           ).send({ message: messages.info.signInSuccess });
         });

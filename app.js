@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -23,9 +24,26 @@ mongoose.connect(DATA_BASE, {
   useFindAndModify: false,
 });
 
+const corsWhiteList = [
+  'https://inmovies.nomoredomains.club',
+  'http://inmovies.nomoredomains.club',
+  'https://localhost:3000',
+  'http://localhost:3000',
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (corsWhiteList.indexOf(origin) !== -1) {
+      callback(null, true);
+    }
+  },
+  credentials: true,
+};
+
 app.use(requestLogger);
 app.use(cookieParser());
 app.use(limit);
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
